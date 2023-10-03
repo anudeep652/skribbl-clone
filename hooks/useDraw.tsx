@@ -7,10 +7,11 @@ import {
 } from "react";
 
 export default function useDraw(
-  canvasRef: MutableRefObject<HTMLCanvasElement | undefined>
+  canvasRef: MutableRefObject<HTMLCanvasElement | null>
 ): [
   setStrokeColor: Dispatch<SetStateAction<string>>,
-  setStrokeWidth: Dispatch<SetStateAction<number>>
+  setStrokeWidth: Dispatch<SetStateAction<number>>,
+  clearBoard: () => void
 ] {
   const [shouldDraw, setShouldDraw] = useState(false);
   const [strokeWidth, setStrokeWidth] = useState(5);
@@ -26,6 +27,11 @@ export default function useDraw(
     console.log(shouldDraw);
     console.log(e.clientX, e.clientY);
     if (!ctx) return;
+  };
+
+  const clearBoard = () => {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   };
 
   const draw = (e: MouseEvent) => {
@@ -59,5 +65,5 @@ export default function useDraw(
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [shouldDraw]);
-  return [setStrokeColor, setStrokeWidth];
+  return [setStrokeColor, setStrokeWidth, clearBoard];
 }
