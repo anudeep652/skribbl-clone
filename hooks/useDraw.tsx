@@ -8,11 +8,11 @@ import {
 
 export default function useDraw(
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
-): [
-  setStrokeColor: Dispatch<SetStateAction<string>>,
-  setStrokeWidth: Dispatch<SetStateAction<number>>,
-  clearBoard: () => void
-] {
+): {
+  setStrokeColor: Dispatch<SetStateAction<string>>;
+  setStrokeWidth: Dispatch<SetStateAction<number>>;
+  clearBoard: () => void;
+} {
   const [shouldDraw, setShouldDraw] = useState(false);
   const [strokeWidth, setStrokeWidth] = useState(5);
   const [strokeColor, setStrokeColor] = useState("black");
@@ -65,5 +65,5 @@ export default function useDraw(
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [shouldDraw]);
-  return [setStrokeColor, setStrokeWidth, clearBoard];
+  return { setStrokeColor, setStrokeWidth, clearBoard };
 }
