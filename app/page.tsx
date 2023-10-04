@@ -1,11 +1,25 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDraw } from "@/hooks";
 import DrawingTools from "@/components/DrawingTools";
+import socketio from "socket.io-client";
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { setStrokeColor, setStrokeWidth, clearBoard } = useDraw(canvasRef);
+  console.log("effect");
+
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:8000/ws");
+    socket.onopen = () => {
+      console.log("connected");
+    };
+    socket.onmessage = (event) => {
+      console.log(event.data);
+      socket.send("received the message ");
+      socket.close();
+    };
+  }, []);
 
   return (
     <main className="flex justify-center items-center h-screen">

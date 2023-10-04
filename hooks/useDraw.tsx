@@ -24,9 +24,6 @@ export default function useDraw(
 
   const handleMouseDown = (e: MouseEvent) => {
     setShouldDraw(true);
-    console.log(shouldDraw);
-    console.log(e.clientX, e.clientY);
-    if (!ctx) return;
   };
 
   const clearBoard = () => {
