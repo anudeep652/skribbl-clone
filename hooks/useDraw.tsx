@@ -5,18 +5,22 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useWebsocket } from ".";
+import { TSetBoardTools } from "@/types";
 
 export default function useDraw(
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
-): {
-  setStrokeColor: Dispatch<SetStateAction<string>>;
-  setStrokeWidth: Dispatch<SetStateAction<number>>;
-  clearBoard: () => void;
-} {
+): TSetBoardTools {
   const [shouldDraw, setShouldDraw] = useState(false);
   const [strokeWidth, setStrokeWidth] = useState(5);
   const [strokeColor, setStrokeColor] = useState("black");
+  const { socket, sendCanvasData } = useWebsocket();
 
+  if (socket) {
+    socket.onmessage = (e) => {
+      console.log(e.data);
+    };
+  }
   const ctx = canvasRef.current?.getContext("2d");
 
   const canvasOffsetX = canvasRef.current?.offsetLeft || 0;
@@ -53,6 +57,7 @@ export default function useDraw(
     canvasRef.current?.addEventListener("mouseup", handleMouseUp);
     canvasRef.current?.addEventListener("mousemove", draw);
     window.addEventListener("mouseup", handleMouseUp);
+    sendCanvasData(canvasRef.current?.toDataURL() || "");
 
     return () => {
       canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
