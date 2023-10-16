@@ -22,8 +22,10 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
 
+      - name: Install prettier
+        run: npm install --save-dev --save-exact prettier
+
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
-          eslint: true
           prettier: true
