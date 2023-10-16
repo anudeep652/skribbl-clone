@@ -12,7 +12,7 @@ export default function Home() {
   const { socket, sendCanvasData } = useWebsocket(params.id);
   const { setStrokeColor, setStrokeWidth, clearBoard } = useDraw(
     canvasRef,
-    sendCanvasData
+    sendCanvasData,
   );
   const { roomData, setRoom } = useRoom();
   const { user } = useUser();

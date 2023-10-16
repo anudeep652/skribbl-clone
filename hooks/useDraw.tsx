@@ -5,7 +5,7 @@ import useRoom from "./useRoom";
 
 export default function useDraw(
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
-  sendCanvasData: (data: string) => void
+  sendCanvasData: (data: string) => void,
 ): TSetBoardTools {
   const [shouldDraw, setShouldDraw] = useState(false);
   const [strokeWidth, setStrokeWidth] = useState(5);

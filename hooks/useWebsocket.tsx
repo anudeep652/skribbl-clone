@@ -10,7 +10,7 @@ export default function useWebsocket(roomId: string) {
   useEffect(() => {
     console.log(user?.id);
     setSocket(
-      new WebSocket(`ws://localhost:8000/join-room/${roomId}?user=${user?.id}`)
+      new WebSocket(`ws://localhost:8000/join-room/${roomId}?user=${user?.id}`),
     );
 
     (async () => {
